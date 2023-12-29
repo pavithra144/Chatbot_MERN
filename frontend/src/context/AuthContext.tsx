@@ -1,5 +1,6 @@
-import { ReactNode, createContext, useState } from "react";
-import { loginApi } from "../services/api";
+import { ReactNode, createContext, useEffect, useState } from "react";
+import { loginApi, verifyToken } from "../services/api";
+import axios from "axios";
 
 type User = {
   name: string;
@@ -21,9 +22,20 @@ export const GlobalAuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    async function reloadDataCheck() {
+      const data = await verifyToken();
+      console.log(data, "data in useEffect");
+      // if (data) {
+      //   setUser({ email: data.email, name: data.name });
+      //   setIsLoggedIn(true);
+      // }
+    }
+    reloadDataCheck();
+  }, []);
+
   const login = async (email: string, password: string) => {
     const data = await loginApi(email, password);
-    console.log(data, "data");
     if (data) {
       setUser({ email: data?.email, name: data?.name });
       setIsLoggedIn(true);

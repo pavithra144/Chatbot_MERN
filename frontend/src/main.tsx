@@ -16,7 +16,7 @@ const theme = createTheme({
 });
 
 axios.defaults.baseURL = "http://localhost:8000/api/v1";
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
