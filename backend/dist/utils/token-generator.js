@@ -19,7 +19,8 @@ export const verifyTokens = async (req, res, next) => {
             }
             else {
                 resolve(success);
-                return next();
+                res.locals.jwtData = success;
+                next();
             }
         });
     });

@@ -21,7 +21,7 @@ export const signup = async (req, res, next) => {
         const hashedPassword = await hash(password, salt);
         const user = new User({ name, email, password: hashedPassword });
         await user.save();
-        res.clearCookie("hi", {
+        res.clearCookie(cookie_secret_name, {
             path: "/",
             domain: "localhost",
             httpOnly: true,
@@ -31,7 +31,7 @@ export const signup = async (req, res, next) => {
         const token = createToken(user._id.toString(), user.email, "7d");
         const cookieDate = new Date();
         cookieDate.setDate(cookieDate.getDate() + 7);
-        res.cookie("hi", token, {
+        res.cookie(cookie_secret_name, token, {
             path: "/",
             domain: "locahost",
             httpOnly: true,
@@ -63,6 +63,7 @@ export const login = async (req, res, next) => {
         });
         //create new token
         const token = createToken(user._id.toString(), user.email, "7d");
+        console.log(token, "tokem");
         const cookieDate = new Date();
         cookieDate.setDate(cookieDate.getDate() + 7);
         res.cookie(cookie_secret_name, token, {
@@ -74,7 +75,7 @@ export const login = async (req, res, next) => {
         });
         return res
             .status(200)
-            .json({ message: "ok", name: user.name, email: user.email });
+            .json({ message: "ok", id: user.id, name: user.name, email: user.email });
     }
     catch (error) {
         return res.status(200).json({ message: "Error", cause: error.message });
@@ -82,20 +83,21 @@ export const login = async (req, res, next) => {
 };
 export const verifyUser = async (req, res, next) => {
     try {
+        //user token check
         const user = await User.findById(res.locals.jwtData.id);
         if (!user) {
-            return res.status(401).send("user not registered or Token corrupted");
+            return res.status(401).send("User not registered OR Token malfunctioned");
         }
-        console.log(user._id.toString(), "user._id");
-        if (user._id !== res.locals.jwtData.id) {
-            return res.status(401).send("Not a valid user");
+        if (user._id.toString() !== res.locals.jwtData.id) {
+            return res.status(401).send("Permissions didn't match");
         }
         return res
             .status(200)
-            .json({ message: "ok", name: user.name, email: user.email });
+            .json({ message: "OK", name: user.name, email: user.email });
     }
     catch (error) {
-        return res.status(401).json({ message: "Error", cause: error.message });
+        console.log(error);
+        return res.status(200).json({ message: "ERROR", cause: error.message });
     }
 };
 //# sourceMappingURL=users.js.map

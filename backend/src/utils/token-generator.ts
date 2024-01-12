@@ -26,7 +26,8 @@ export const verifyTokens = async (
         return res.status(401).json({ message: "Token verification failed" });
       } else {
         resolve(success);
-        return next();
+        res.locals.jwtData = success;
+        next();
       }
     });
   });

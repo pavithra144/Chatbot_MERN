@@ -1,6 +1,5 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { loginApi, verifyToken } from "../services/api";
-import axios from "axios";
 
 type User = {
   name: string;
@@ -25,11 +24,11 @@ export const GlobalAuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     async function reloadDataCheck() {
       const data = await verifyToken();
-      console.log(data, "data in useEffect");
-      // if (data) {
-      //   setUser({ email: data.email, name: data.name });
-      //   setIsLoggedIn(true);
-      // }
+
+      if (data) {
+        setUser({ email: data.email, name: data.name });
+        setIsLoggedIn(true);
+      }
     }
     reloadDataCheck();
   }, []);

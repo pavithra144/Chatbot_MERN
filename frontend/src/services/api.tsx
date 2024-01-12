@@ -11,11 +11,9 @@ export const loginApi = async (email: string, password: string) => {
 };
 
 export const verifyToken = async () => {
-  debugger;
   const res = await axios.get("/user/val");
 
-  console.log(res, "res");
-  if (res.status != 200) {
+  if (res.status == 200) {
     const data = await res.data;
     return data;
   } else {
