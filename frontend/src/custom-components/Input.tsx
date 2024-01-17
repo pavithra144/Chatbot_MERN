@@ -7,7 +7,7 @@ type InputProps = {
   name: string;
   type: string;
   value?: string;
-  label: string;
+  label?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 };
 const Input = ({

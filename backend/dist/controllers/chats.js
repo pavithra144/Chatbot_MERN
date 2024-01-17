@@ -4,9 +4,10 @@ import { OpenAIApi } from "openai";
 export const getAllChats = async (req, res, next) => {
     try {
         const { message } = req.body;
-        const user = await User.findById(res.locals.jwtData);
+        res.set({ "Retry-After": 3600 });
+        const user = await User.findById(res.locals.jwtData.id);
         if (!user)
-            return res.status(401).send("Token Malfunctioned");
+            return res.status(401).json({ message: "Token Malfunctioned" });
         const chats = user.chats.map(({ content, role }) => ({
             role,
             content,
@@ -21,10 +22,10 @@ export const getAllChats = async (req, res, next) => {
         });
         user.chats.push(chatResponse.data.choices[0].message);
         await user.save();
-        return res.send(200).json({ chats: user.chats });
+        return res.status(200).json({ chats: user.chats });
     }
     catch (error) {
-        return res.status(500).json({ message: "error", cause: error.message });
+        return res.status(500).json({ message: "error", cause: error });
     }
 };
 //# sourceMappingURL=chats.js.map

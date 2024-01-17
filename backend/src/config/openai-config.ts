@@ -1,4 +1,4 @@
-import Configuration from "openai";
+import { Configuration } from "openai";
 
 export const openaiConfig = () => {
   const config = new Configuration({

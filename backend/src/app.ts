@@ -16,7 +16,6 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser(cookie_secret_name));
-
 app.use(morgan("dev"));
 
 app.use("/api/v1", appRouter);
