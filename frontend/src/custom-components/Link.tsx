@@ -6,10 +6,11 @@ type LinkProps = {
     text:string,
     textColor:string,
     onClick?:() => Promise<void>
+    className?:string;
 }
-const MainLink = ({to,bg,text,textColor,onClick}:LinkProps) => {
+const MainLink = ({to,bg,text,textColor,onClick,className}:LinkProps) => {
   return (
-   <Link to={to} style={{background:bg, color:textColor}} onClick={onClick}>{text}</Link>
+   <Link to={to} style={{background:bg, color:textColor}} onClick={onClick} className={className}>{text}</Link>
 )}
 
 export default MainLink

@@ -1,6 +1,6 @@
 import { AppBar, Toolbar } from "@mui/material";
 import Logo from "./Logo";
-import useAuth from "../context/AuthContext";
+import "./header.css";
 import { useContext } from "react";
 import MainLink from "../custom-components/Link";
 import AuthContext from "../context/AuthContext";
@@ -9,10 +9,10 @@ function Header() {
   const useAuth = useContext(AuthContext);
   console.log(useAuth?.isLoggedIn, "isloggedin");
   return (
-    <AppBar sx={{ bgcolor: "blue" }}>
-      <Toolbar>
+    <AppBar sx={{ bgcolor: "rgb(18, 5, 5)" }}>
+      <Toolbar className="header-content">
         <Logo />
-        <div>
+        <div >
           {useAuth?.isLoggedIn ? (
             <>
               <MainLink
@@ -20,8 +20,9 @@ function Header() {
                 bg="#00fffc"
                 text="Your chats"
                 textColor="black"
+                className="yourChats"
               />
-              <MainLink to="/" bg="#51538f" text="Logout" textColor="white" />
+              <MainLink to="/" bg="#51538f" text="Logout" textColor="white"  className="logout"/>
             </>
           ) : (
             <>

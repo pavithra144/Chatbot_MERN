@@ -31,16 +31,21 @@ const Login = () => {
     }
   };
   return (
-    <div>
-      <Box>
+    <Box width={"100%"} height={"100%"} display="flex" flex={1}>
+      <Box padding={8}  >
         {/* robo image */}
-        <img src={airobot} alt="airobot" style={{ width: "400px" }} />
+        <img src={airobot} alt="airobot" width='300px' height='400px' />
       </Box>
-      <Box>
+      <Box  display={"flex"}
+        flex={{ xs: 1, md: 0.5 }}
+        justifyContent={"center"}
+        alignItems={"center"}
+        padding={2}
+        >
         {/* LoginHeader */}
         <form onSubmit={submitHandler}>
           <Box>
-            <Typography variant="h4">Login</Typography>
+            <Typography variant="h4" sx={{padding:'10px'}}>Login</Typography>
             <Input
               type="text"
               // value={formValues.email}
@@ -71,7 +76,7 @@ const Login = () => {
           </Button>
         </form>
       </Box>
-    </div>
+    </Box>
   );
 };
 
